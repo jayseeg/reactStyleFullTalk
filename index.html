@@ -273,20 +273,20 @@ const {
 if (!props.isOpen) return (<span></span>)
 
 return (
-  <Modal
+  &lt;Modal
     title='Reporting Chart Configuration'
     backdrop={true}
     animation={true}
     container={props.container}
     onRequestHide={props.hideHandler}
     ref='reportSelectModal'
-  >
-    <div className='modal-body'>
-      <div className='control-group'>
-        <label>Source</label>
-			</div>
-		</div>
-	</Modal>
+  &gt;
+    &lt;div className='modal-body'&gt;
+      &lt;div className='control-group'&gt;
+        &lt;label&gt;Source&lt;/label&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/Modal&gt;
 )
 				    </code></pre>
 						<aside class="notes">
@@ -347,9 +347,9 @@ function render() {
 					  <pre><code data-trim class="jsx">
 render () {
 	return (
-		<MyComponent>
-			<h1>Hello World</h1>
-		</MyComponent>
+		&lt;MyComponent&gt;
+			&lt;h1&gt;Hello World&lt;/h1&gt;
+		&lt;/MyComponent&gt;
 	)
 }
 					  </code></pre>
@@ -530,7 +530,7 @@ const styles = extend(importedStyles, {
 					</section>
 					<section>
 				    <pre><code data-trim class="html">
-<div style="display: inline-block; width: 8px; height: 8px; bottom: 0px; margin-left: 0px; margin-right: 5px; border-radius: 99px; position: relative; transition: background-color 0.111s ease-in-out; background-color: rgb(132, 154, 61);" data-reactid=".0.$=11:0.$=10=21:0.$=11:0.1.1.$0.0.0.0"></div>
+&lt;div style="display: inline-block; width: 8px; height: 8px; bottom: 0px; margin-left: 0px; margin-right: 5px; border-radius: 99px; position: relative; transition: background-color 0.111s ease-in-out; background-color: rgb(132, 154, 61);" data-reactid=".0.$=11:0.$=10=21:0.$=11:0.1.1.$0.0.0.0"&gt;&lt;/div&gt;
 				    </code></pre>
 					</section>
 				</section>
@@ -576,9 +576,9 @@ const styles = extend(importedStyles, {
 				    <pre><code data-trim class="jsx">
 render () {
 	return (
-		<MyComponent>
-			<h1>Hello World</h1>
-		</MyComponent>
+		&lt;MyComponent&gt;
+			&lt;h1&gt;Hello World&lt;/h1&gt;
+		&lt;/MyComponent&gt;
 	)
 }
 				    </code></pre>
@@ -589,43 +589,464 @@ render () {
 				</section>
 
 				<section>
-					<section>
-						<h1>JSX & Inline Styles</h1>
-						<p>
-							Leave predictable/readable components for your future self and/or any future devs that have to touch your work.
-						</p>
-						<br>
-						<br>
-						<p>
-							<small>Presented by <a href="https://www.linkedin.com/in/jayseeg">Jake Gibbons</a> / <a href="https://twitter.com/jayseeg">@jayseeg</a></small>
-						</p>
-						<aside class="notes">
-				      In closing, JSX & Inline Styles w/ react are intuitive ways to make your code more maintainable over time.
+					<h2>Complications</h2>
+					<aside class="notes">
+						<ul>
+							<li>
+								It's not all peaches n' cream
+							</li>
+							<li>
+								This approach eliminates the problems we went through
+							</li>
+							<li>
+								But it introduces some complications & tradeoffs
+							</li>
+						</ul>
+					</aside>
+				</section>
 
-				      This was just a quick overview.
-
-				      Come to my Friday morning talk at Develop Denver to hear about the hairy details!
-				    </aside>
-					</section>
+				<section>
 					<section>
-						<h1>JSX & Inline Styles</h1>
-						<p>
-							There's lots more including problems & tradeoffs introduced by this approach, and the solutions/explanations for them.
+						<h2>Clutter</h2>
+						<p class="fragment">
+							Components don't stay simple.
 						</p>
 						<p class="fragment">
-							Come to my talk Friday morning August  at Develop Denver to hear me talk about them.
-						</p>
-						<p>
-							<small>Presented by <a href="https://www.linkedin.com/in/jayseeg">Jake Gibbons</a> / <a href="https://twitter.com/jayseeg">@jayseeg</a></small>
+							Complexity can lead to cluttered component code.
 						</p>
 						<aside class="notes">
-				      In closing, JSX & Inline Styles w/ react are intuitive ways to make your code more maintainable over time.
-
-				      This was just a quick overview.
-
-				      Come to my Friday morning talk at Develop Denver to hear about the hairy details!
+							<ul>
+								<li>
+								</li>
+							</ul>
+						</aside>
+					</section>
+					<section>
+						<h2>Inline Styles Reduce Readability</h2>
+				    <pre><code data-trim class="jsx fragment">
+return (
+	&lt;MyComponent
+		style={{
+			minHeight: 350,
+			color: 'red',
+			backgroundColor: 'black',
+			width: '36em',
+			position: 'relative',
+		}}
+	&gt;
+		&lt;div
+			style={{
+				position: 'absolute',
+				top: 16,
+				left: 16,
+			}}
+		&gt;
+			Some stuffs.
+		&lt;/div&gt;
+	&lt;/MyComponent&gt;
+)
+				    </code></pre>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h2>Treat Styles Like Objects</h2>
+						<p class="fragment">
+							(because they are)
+						</p>
+				    <pre><code data-trim class="jsx fragment">
+const styles = {
+	MyComponentStyles: {
+		minHeight: 350,
+		width: '36em',
+		position: 'relative',
+	},
+	divStyles: {
+		position: 'absolute',
+		top: 16,
+		left: 16,
+	}
+}
+return (
+	&lt;MyComponent style={styles.MyComponentStyles}&gt;
+		&lt;div style={styles.divStyles}&gt;
+			Some stuffs.	
+		&lt;/div&gt;
+	&lt;/MyComponent&gt;
+)
+				    </code></pre>
+				    <aside class='notes'>
+				    	now it looks like html again
 				    </aside>
 					</section>
+					<section>
+						<h2>Complex Property Lists Also Reduce Readability</h2>
+				    <pre><code data-trim class="jsx fragment">
+return (
+	&lt;MyComponent
+		changeHandler={this.changeHandler.bind(this)}
+		key={props.id}
+		yOrient='left'
+		align='right'
+		legend={props.data.length &gt; 1 ? true : false}
+	&gt;
+		&lt;div
+			isReactCSSTransitionGroup={true}
+			ref='someStuffs'
+			className='yoyo yo'
+		&gt;
+			Some stuffs.	
+		&lt;/div&gt;
+	&lt;/MyComponent&gt;
+)
+				    </code></pre>
+				    <aside class='notes'>
+				    	this only loosely resembles html
+				    </aside>
+					</section>
+					<section>
+						<h2>Treat Properties Like Objects</h2>
+						<p class="fragment">
+							(because they are)
+						</p>
+				    <pre><code data-trim class="jsx fragment">
+const MyComponentProps = {
+	changeHandler: this.changeHandler.bind(this),
+	key: props.id,
+	yOrient: 'left',
+	align: 'right',
+	legend: props.data.length > 1 ? true : false,
+	style: styles.MyComponentStyles,
+}
+const divProps = {
+	isReactCSSTransitionGroup: true,
+	ref: 'someStuffs',
+	className: 'yoyo yo',
+	style: styles.divStyles,
+}
+return (
+	&lt;MyComponent {...MyComponentProps}&gt;
+		&lt;div {...divProps}&gt;
+			Some stuffs.
+		&lt;/div&gt;
+	&lt;/MyComponent&gt;
+)
+				    </code></pre>
+				    <aside class='notes'>
+				    	<ul>
+				    		<li>
+				    			again
+				    		</li>
+				    		<li>
+				    			we're really dealing with objects
+				    		</li>
+				    		<li>
+				    			now it looks like html
+				    		</li>
+				    	</ul>
+				    </aside>
+					</section>
+				</section>
+
+				<section>
+					<section>						
+						<h2>Pseudo Selectors</h2>
+						<p class="fragment">Don't work inline.</p>
+						<p class="fragment">:\</p>
+					</section>
+					<section>
+						<h2>But We still need hover?!</h2>
+						<p class="fragment">
+							Libraries to the rescue!
+						</p>
+					</section>
+					<section>
+						<h2>Radium.js</h2>
+						<p class="fragment">
+							Is a decoration on React classes.
+						</p>
+						<p class="fragment">
+							It's kind of shimming inline style's shortcomings.
+						</p>
+						<pre><code data-trim class="jsx fragment">
+const styles = {
+	linkStyle: {
+		backgroundColor: '#FFF'
+		':hover': {
+			backgroundColor: '#0088FF'
+		}
+	}
+},
+				    </code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Media Queries</h2>
+						<p class="fragment">Also,...</p>
+						<p class="fragment">Don't work inline.</p>
+						<p class="fragment">:\</p>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h2>Radium.js</h2>
+						<p class="fragment">To the rescue again!</p>
+				    <pre><code data-trim class="jsx fragment">
+const styles = {
+	linkStyle: {
+		backgroundColor: '#FFF',
+		':hover': {
+			backgroundColor: '#0088FF',
+		},
+		'@media(min-width:769px)': {
+			fontSize: 16,
+		},
+	},
+},
+				    </code></pre>
+						<aside class="notes">
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Publishing Your Own Components</h2>
+						<p class="fragment">
+							Inline styles will not be overridden.
+						</p>
+						<p class="fragment">
+							Your consumers need an API, or,...
+						</p>
+						<p class="fragment">
+							you can simply use stylesheets.
+						</p>
+						<p class="fragment">
+							:\
+						</p>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h2>Public API</h2>
+						<p class="fragment">
+							Add props for each stylable child element.
+						</p>
+					</section>
+					<section>
+						<p>
+							The top level component gets setup by the consumer:
+						</p>
+				    <pre><code data-trim class="jsx fragment">
+import { MyComponent } from 'my-published-component'
+...
+return (
+	&lt;MyComponent
+		divStyle={styles.customDivStyles}
+		linkStyle={styles.customLinkStyles}
+	/&gt;
+)
+				    </code></pre>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<p>
+							Within the published component we apply those props as styles:
+						</p>
+				    <pre><code data-trim class="jsx fragment">
+const styles = {
+	divStyle: {
+		...
+	},
+	linkStyle: {
+	  ...
+	},
+}
+
+const {
+	divStyle,
+	linkStyle,
+} = this.props
+
+const _divStyle = extend({}, styles.divStyle, divStyle)
+const _linkStyle = extend({}, styles.linkStyle, linkStyle)
+
+return (
+	&lt;div
+		style={_divStyle}
+	&gt;
+		&lt;a
+			href='javascript:void(1)'
+			style={_linkStyle}
+		&gt;
+			Click me!
+		&lt;/a&gt;
+	&lt;/div&gt;
+)
+				    </code></pre>
+				    <p class="fragment">
+				    	This is a use case where classic CSS makes the code more portable, so it may be better to just use classes and CSS.
+				    </p>
+						<aside class="notes">
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>CSS Animations</h2>
+						<p>
+							Easier than you think.
+						</p>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h2>Radium.js</h2>
+						<p>
+							Radium provides an API for keyframe animations:
+						</p>
+				    <pre><code data-trim class="jsx fragment">
+const pulseKeyframes = Radium.keyframes({
+  '0%': {width: '10%'},
+  '50%': {width: '50%'},
+  '100%': {width: '10%'},
+});
+
+const styles = {
+  inner: {
+    animation: `${pulseKeyframes} 3s ease 0s infinite`,
+    background: 'blue',
+    height: '4px',
+    margin: '0 auto',
+  }
+};
+				    </code></pre>
+				    <p class="fragment">
+				    	Radium takes care of the vendor prefixing as well.
+				    </p>
+						<aside class="notes">
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>CSS Transitions</h2>
+						<p class="fragment">
+							Not as easy as you think.
+						</p>
+						<p class="fragment">
+							:\
+						</p>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h2>CSSTransitionGroup</h2>
+						<p>
+							React has an addon called CSSTransitionGroup.
+						</p>
+						<p class="fragment">
+							It manages the application of custom classes through component lifecycle hooks.
+						</p>
+						<p class="fragment">
+							But that means we need a seperate style sheet <span class="fragment">,... right?</span>
+						</p>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h2>Radium Style Component</h2>
+						<p>
+							Adds a style element to the DOM.
+						</p>
+						<p class="fragment">
+							Warning: use sparingly!
+						</p>
+				    <pre><code data-trim class="jsx fragment">
+import Radium, { Style } from 'radium'
+import { ReactCSSTransitionGroup } from ('react/addons/CSSTransitionGroup')
+...
+return (
+	&lt;div&gt;
+    &lt;Style rules={{
+	      '.yo-appear': {
+	        opacity: 0.01,
+	        transition: 'opacity 1.666s linear',
+	      },
+	      '.yo-appear.yo-appear-active': {
+	        opacity: 1
+	      }
+	    }}
+	  &gt;
+	  &lt;/Style&gt;
+    &lt;ReactCSSTransitionGroup
+    	transitionName='yo'
+    	transitionAppear={true}
+    &gt;
+    	{props.children}
+    &lt;/ReactCSSTransitionGroup&gt;
+	&lt;/div&gt;
+)
+				    </code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Byte Size</h2>
+						<p class="fragment">
+							nom, nom, nom
+						</p>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h2>Inline Styles Can Bloat the Size of Your HTML</h2>
+				    <pre><code data-trim class="html fragment">
+&lt;ul&gt;
+	&lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
+&lt;/ul&gt;
+				    </code></pre>
+						<p class="fragment">Especially for large lists.</p>
+				    <pre><code data-trim class="html fragment">
+&lt;ul&gt;
+	&lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
+	&lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
+	&lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
+	...
+	...
+	...
+	&lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
+&lt;/ul&gt;
+				    </code></pre>
+				    <p class="fragment">57 Characters ~ between 57 & 228 Bytes per element,</p>
+				    <p class="fragment">roughly 1KB per 17 elements.</p>
+						<aside class="notes">
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<h1>JSX & Inline Styles</h1>
+					<p>
+						Leave predictable/readable components for your future self and/or any future devs that have to touch your work.
+					</p>
+					<br>
+					<br>
+					<p class="fragment">
+						JSX & Inline Styles can be a powerful tool to accomplish this goal,... but keep the potential complications in mind.
+					</p>
+					<p class="fragment">
+						<small>Presented by <a href="https://www.linkedin.com/in/jayseeg">Jake Gibbons</a> / <a href="https://twitter.com/jayseeg">@jayseeg</a></small>
+					</p>
+					<aside class="notes">
+			      In closing, JSX & Inline Styles w/ react are intuitive ways to make your code more maintainable over time.
+			    </aside>
 				</section>
 
 			</div>
