@@ -1,915 +1,708 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
 
-		<title>Predictablity--or Why JSX & Inline Styles Win</title>
+    <title>Predictablity--or Why Inline Styles Win--and Why They Lose</title>
 
-		<meta name="description" content="A presentation on the benefits of using JSX & Inline Styles with React.">
-		<meta name="author" content="Jacob Gibbons">
+    <meta name="description" content="A presentation on the benefits and challenges of using Inline Styles with React.">
+    <meta name="author" content="Jacob Gibbons">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css" id="theme">
 
-		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
 
-	<body>
+  <body>
 
-		<div class="reveal">
+    <div class="reveal">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
-				<section>
-					<h1>Predictability</h1>
-					<h3>or Why JSX & Inline Styles Win Over 'Seperation of Concerns' Dogma</h3>
-					<p>
-						<small>Presented by <a href="https://www.linkedin.com/in/jayseeg">Jake Gibbons</a> / <a href="https://twitter.com/jayseeg">@jayseeg</a></small>
-					</p>
-					<aside class="notes">
-						<ul>
-							<li>
-								Who here shouted that at twitter when they first saw JSX?
-							</li>
-							<li>
-								Perfect audience?
-							</li>
-							<li>
-								Seperation of concerns is why we put js in one folder,
-							</li>
-							<li>
-								styles in another,
-							</li>
-							<li>
-								and markup in another.
-							</li>
-							<li>
-								I think the main point of that was to get us to stop writing repetitive scripts & styles.
-							</li>
-							<li>
-								Instead we started reusing the scripts & styles.
-							</li>
-							<li>
-								That made our sites more DRY.
-							</li>
-							<li>
-								Now that we write modular components, we don't have to use the different folders & files abstraction.
-							</li>
-							<li>
-								Because reusable components are dry by nature.
-							</li>
-							<li>
-								Let me tell you why I say that.
-							</li>
-						</ul>
-			    </aside>
-				</section>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>Predictability</h1>
+          <h3>or Why Inline Styles Win Over 'Seperation of Concerns' Dogma</h3>
+          <h3 class="fragment">and Why They Lose</h3>
+          <p>
+            <small>Presented by <a href="https://www.linkedin.com/in/jayseeg">Jake Gibbons</a> / <a href="https://twitter.com/jayseeg">@jayseeg</a></small>
+          </p>
+          <aside class="notes">
+            <ul>
+              <li>
+                Seperation of concerns is why we put js in one folder,
+              </li>
+              <li>
+                styles in another,
+              </li>
+              <li>
+                and markup in another.
+              </li>
+              <li>
+                I think the main point of that was to get us to stop writing repetitive scripts & styles.
+              </li>
+              <li>
+                Instead we started reusing the scripts & styles.
+              </li>
+              <li>
+                That made our sites more DRY.
+              </li>
+              <li>
+                Now that we write modular components, we don't have to use the different folders & files abstraction.
+              </li>
+              <li>
+                Because reusable components are dry by nature.
+              </li>
+              <li>
+                Let me tell you why I say that.
+              </li>
+            </ul>
+          </aside>
+        </section>
 
-				<section>
-					<h2>Problem</h2>
-					<p>
-						It's difficult to predictably modify or style components in a <span class="fragment">React</span> web app.
-					</p>
-					<ul>
-						<li class="fragment">
-							Globals
-						</li>
-						<li class="fragment">
-							Sharing Values Across 'Concerns'
-						</li>
-						<li class="fragment">
-							The Cascade
-						</li>
-						<li class="fragment">
-							Dependencies
-						</li>
-						<li class="fragment">
-							Findability
-						</li>
-						<li class="fragment">
-							Readability
-						</li>
-					</ul>
-					<aside class="notes">
-			    	 It's difficult to predictably modify or style components in a web app
+        <section>
+          <h2>Problem</h2>
+          <p>
+            It's difficult to predictably modify or style components in a <span class="fragment">React</span> web app.
+          </p>
+          <ul>
+            <li class="fragment">
+              Globals
+            </li>
+            <li class="fragment">
+              Sharing Values Across 'Concerns'
+            </li>
+            <li class="fragment">
+              The Cascade
+            </li>
+            <li class="fragment">
+              Dependencies
+            </li>
+            <li class="fragment">
+              Findability
+            </li>
+          </ul>
+          <aside class="notes">
+             It's difficult to predictably modify or style components in a web app
 
-			    	 Specifically a React app for the purposes of this presentation.
+             Specifically a React app for the purposes of this presentation.
 
-			    	 There are challenges surrounding: globals, sharing values across 'concerns', the cascade, dependencies, findability, and readability.
+             There are challenges surrounding: globals, sharing values across 'concerns', the cascade, dependencies, and findability.
 
-			    	 I'll go into each more indepth now.
-			    </aside>
-				</section>
+             I'll go into each more indepth now.
+          </aside>
+        </section>
 
-				<section>
-					<section>
-						<h2>Globals</h2>
-						<p>
-							CSS Stylesheets Encourage Piles of Globals
-						</p>
-						<aside class="notes">
-				      We all know that littering our app with globals in JS is a dangerous thing, but for some reason we think it's ok with CSS.
-				    </aside>
-					</section>
-					<section>
-						<h2>Bootstrap, for Instance, Introduces 600 Globals</h2>
-						<br>
-						<p>
-							<small>Shamelessly stolen from <a href="http://blog.vjeux.com/2014/javascript/react-css-in-js-nationjs.html">Christopher Chedeau's presentation on inline styles</a>.</small>
-						</p>
-						<aside class="notes">
-				    	Each declaration is essentially a global variable being placed in the browser waiting for an element to grab it.
+        <section>
+          <section>
+            <h2>Globals</h2>
+            <p>
+              CSS Stylesheets Encourage Piles of Globals
+            </p>
+            <aside class="notes">
+              We all know that littering our app with globals in JS is a dangerous thing, but for some reason we think it's ok with CSS.
+            </aside>
+          </section>
+          <section>
+            <h2>Bootstrap, for Instance, Introduces 600 Globals</h2>
+            <br>
+            <p>
+              <small>Shamelessly stolen from <a href="http://blog.vjeux.com/2014/javascript/react-css-in-js-nationjs.html">Christopher Chedeau's presentation on inline styles</a>.</small>
+            </p>
+            <aside class="notes">
+              Each declaration is essentially a global variable being placed in the browser waiting for an element to grab it.
 
-				    	How many of you used to write JS this way?
+              How many of you used to write JS this way?
 
-				    	How many still do?
-				    </aside>
-					</section>
-				</section>
+              How many still do?
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Sharing Values</h2>
-						<p>
-							Comment breadcrumbs are a pretty shoddy way of telling your future self where shared values are.
-						</p>
-						<p class="fragment">
-							What if filenames change?
-						</p>
-						<p class="fragment">
-							Or if some jerk doesn't update the comment when they move the shared code.
-						</p>
-						<aside class="notes">
-				      There are times when you need to derive a value in js that will also be used in css.
+        <section>
+          <section>
+            <h2>Sharing Values</h2>
+            <p>
+              Comment breadcrumbs are a pretty shoddy way of telling your future self where shared values are.
+            </p>
+            <p class="fragment">
+              What if filenames change?
+            </p>
+            <p class="fragment">
+              Or if some jerk doesn't update the comment when they move the shared code.
+            </p>
+            <aside class="notes">
+              There are times when you need to derive a value in js that will also be used in css.
 
-				      If you're strategy here is to assign the value in each and leave a comment saying where it needs to be kept in sync, you've created an unpredictable brittle link for future you, or the next dev to hopefully respect.
-				    </aside>
-					</section>
-				</section>
+              If you're strategy here is to assign the value in each and leave a comment saying where it needs to be kept in sync, you've created an unpredictable brittle link for future you, or the next dev to hopefully respect.
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>The Cascade</h2>
-						<p>
-							It's essentially a giant extend.
-						</p>
-						<aside class="notes">
-				      Extends are great. We use them all the time in js. But if you have to mentally keep track of several extendedrules in your head, you'll probably fail.
-				    </aside>
-					</section>
-					<section>
-						<p>
-							Extend is great in moderation,...
-						</p>
-						<p class="fragment">
-							But when you've got hundreds of rules overriding each each other you need to introduce complex naming conventions <span class="fragment">(BEM)</span> to manage them.
-						</p>
-						<aside class="notes">
-				      Order of declaration is a pretty simple rule to follow, but when you're looking at thousands of lines, it's impossible to keep it in order in your head.
+        <section>
+          <section>
+            <h2>The Cascade</h2>
+            <p>
+              It's essentially a giant extend.
+            </p>
+            <aside class="notes">
+              Extends are great. We use them all the time in js. But if you have to mentally keep track of several extendedrules in your head, you'll probably fail.
+            </aside>
+          </section>
+          <section>
+            <p>
+              Extend is great in moderation,...
+            </p>
+            <p class="fragment">
+              But when you've got hundreds of rules overriding each other you need to introduce complex naming conventions <span class="fragment">(BEM)</span> to manage them.
+            </p>
+            <aside class="notes">
+              Order of declaration is a pretty simple rule to follow, but when you're looking at thousands of lines, it's impossible to keep it in order in your head.
 
-				      Standards like BEM are pretty great for combating this problem, but it feels like a pretty sloppy solution.
-				    </aside>
-					</section>
-				</section>
+              Standards like BEM are pretty great for combating this problem, but it feels like a pretty sloppy solution.
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Dependencies</h2>
-						<p>Serving async CSS is a potential nightmare.</p>
-						<aside class="notes">
-				      You may want to only serve styles for what's on a page in a large Single Page App.
+        <section>
+          <section>
+            <h2>Dependencies</h2>
+            <p>Serving async CSS is a potential nightmare.</p>
+            <aside class="notes">
+              You may want to only serve styles for what's on a page in a large Single Page App.
 
-				      You could produce real performance gains this way.
-				    </aside>
-					</section>
-					<section>
-						<h2>Async + The Cascade === Race Conditions</h2>
-						<p class="fragment">
-							That can span entire site visits.
-						</p>
-					</section>
-					<section>
-						<p>
-							If someone get's to your app from a page other than home, then goes home, what order do the CSS files from each visit get processed in?
-						</p>
-						<p class="fragment">
-							How do you debug/QA test for that?
-						</p>
-						<aside class="notes">
-				      I don't know of a great solution for this, but I also haven't encountered this problem.
-				    </aside>
-					</section>
-				</section>
+              You could produce real performance gains this way.
+            </aside>
+          </section>
+          <section>
+            <h2>Async + The Cascade === Race Conditions</h2>
+            <p class="fragment">
+              That can span entire site visits.
+            </p>
+          </section>
+          <section>
+            <p>
+              If someone get's to your app from a page other than home, then goes home, what order do the CSS files from each visit get processed in?
+            </p>
+            <p class="fragment">
+              How do you debug/QA test for that?
+            </p>
+            <aside class="notes">
+              I don't know of a great solution for this, but I also haven't encountered this problem.
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Findability</h2>
-						<p>
-							It's simple to find things in your app, and you already have your own methods to handle it.
-						</p>
-						<aside class="notes">
-				      This probably seems dumb because you've been dealing with this issue for so long you don't even notice it.
-				    </aside>
-					</section>
-					<section>
-						<h2>One way</h2>
-						<p class="fragment">(of many)</p>
-						<ol>
-							<li class="fragment">
-								You look at a component in your browser to find identifiable text.
-							</li>
-							<li class="fragment">
-								Then you grep for that phrase in your templates.
-							</li>
-							<li class="fragment">
-								Then you grep in your view folder for a call for that previously found template file.
-							</li>
-							<li class="fragment">
-								And you can grep your style folder for all uses of any relevant classes from the template file.
-							</li>
-							<li class="fragment">
-								Then you look at each declaration to determine if it's specificity score qualifies for an override.
-							</li>
-						</ol>
-						<p class="fragment">
-							Simple!
-						</p>
-						<aside class="notes">
-				      (read the slides)
-				    </aside>
-					</section>
-				</section>
+        <section>
+          <section>
+            <h2>Findability</h2>
+            <p>
+              It's simple to find things in your app, and you already have your own methods to handle it.
+            </p>
+            <aside class="notes">
+              This probably seems dumb because you've been dealing with this issue for so long you don't even notice it.
+            </aside>
+          </section>
+          <section>
+            <h2>One way</h2>
+            <p class="fragment">(of many)</p>
+            <ol>
+              <li class="fragment">
+                You look at a component in your browser to find identifiable text.
+              </li>
+              <li class="fragment">
+                Then you grep for that phrase in your templates.
+              </li>
+              <li class="fragment">
+                Then you grep in your view folder for a call for that previously found template file.
+              </li>
+              <li class="fragment">
+                And you can grep your style folder for all uses of any relevant classes from the template file.
+              </li>
+              <li class="fragment">
+                Then you look at each declaration to determine if it's specificity score qualifies for an override.
+              </li>
+            </ol>
+            <p class="fragment">
+              Simple!
+            </p>
+            <aside class="notes">
+              (read the slides)
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Readability</h2>
-						<p>JSX in JS looks like the apocalypse to most seperation of concerns dogmatists.</p>
-				    <pre><code data-trim class="jsx">
-const {
-  reportName,
-  filters,
-} = state
+        <section>
+          <h2>We've Gotten Pretty Good at All of That</h2>
+          <p class="fragment">
+            But there's a better way.
+          </p>
+        </section>
 
-if (!props.isOpen) return (<span></span>)
-
-return (
-  &lt;Modal
-    title='Reporting Chart Configuration'
-    backdrop={true}
-    animation={true}
-    container={props.container}
-    onRequestHide={props.hideHandler}
-    ref='reportSelectModal'
-  &gt;
-    &lt;div className='modal-body'&gt;
-      &lt;div className='control-group'&gt;
-        &lt;label&gt;Source&lt;/label&gt;
-			&lt;/div&gt;
-		&lt;/div&gt;
-	&lt;/Modal&gt;
-)
-				    </code></pre>
-						<aside class="notes">
-				      Most of us probably scoffed pretty hard when we first saw JSX.
-
-				      I know I did.
-				    </aside>
-					</section>
-					<section>
-						<h2>XML in JS?</h2>
-						<p>Wat? Why???</p>
-						<aside class="notes">
-				      This goes against everything we've ever be taught,... right?
-				    </aside>
-					</section>
-					<section>
-						<h2>Nested Function Calls</h2>
-						<p>
-							A series of nested function calls describing the DOM end up looking like a JS pyramid.
-						</p>
-				    <pre><code data-trim class="es6">
-function render() {
-	return React.createElement(
-		MyComponent,
-		null,
-		React.createElement(
-			"h1",
-			null,
-			"Hello World"
-		)
-	)
-}
-				    </code></pre>
-						<aside class="notes">
-				      The alternative isn't terribly readable though.
-				    </aside>
-					</section>
-				</section>
-
-				<section>
-					<h2>We've Gotten Pretty Good at All of That</h2>
-					<p class="fragment">
-						But there's a better way.
-					</p>
-				</section>
-
-				<section>
-					<section>
-						<h2>JSX</h2>
-						<p>
-							JSX is actually an XML like veneer that get's preprocessed into the function calls we're trying to avoid.
-						</p>
-						<aside class="notes">
-				      JSX is the part of a react component that looks like someone just dumped XML in the middle of our beatiful work.
-				    </aside>
-					</section>
-					<section>
-					  <pre><code data-trim class="jsx">
-render () {
-	return (
-		&lt;MyComponent&gt;
-			&lt;h1&gt;Hello World&lt;/h1&gt;
-		&lt;/MyComponent&gt;
-	)
-}
-					  </code></pre>
-					  <div class="fragment">
-							<p>is sugar for</p>
-					    <pre><code data-trim class="es6">
-	function render() {
-		return React.createElement(
-			MyComponent,
-			null,
-			React.createElement(
-				"h1",
-				null,
-				"Hello World"
-			)
-		)
-	}
-					    </code></pre>
-					  </div>
-						<aside class="notes">
-				      We'll touch on this more in a second.
-				    </aside>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h2>Inline Styles</h2>
-						<p>
-							We all know how to write inline styles. You just add a style attribute to an HTML element.
-						</p>
-						<p class="fragment">
-							That declaration automatically takes precedence.
-						</p>
-						<aside class="notes">
-				      This is an old, and frowned upon concept.
-				    </aside>
-					</section>
-					<section>
-						<h2>Inline Styles in React</h2>
-						<p>
-							React encourages the use of inline styles by providing a parser which reads JS objects that have a very similar syntax to CSS.
-						</p>
-						<p class="fragment">
-							The differences are:
-							<ul>
-								<li class="fragment">
-									Keys are camelCased instead of dashed
-								    <pre><code data-trim class="es6">
+        <section>
+          <section>
+            <h2>Inline Styles</h2>
+            <p>
+              We all know how to write inline styles. You just add a style attribute to an HTML element.
+            </p>
+            <p class="fragment">
+              That declaration automatically takes precedence.
+            </p>
+            <aside class="notes">
+              This is an old, and frowned upon concept.
+            </aside>
+          </section>
+          <section>
+            <h2>Inline Styles in React</h2>
+            <p>
+              React encourages the use of inline styles by providing a parser which reads JS objects that have a very similar syntax to CSS.
+            </p>
+            <p class="fragment">
+              The differences are:
+              <ul>
+                <li class="fragment">
+                  Keys are camelCased instead of dashed
+                    <pre><code data-trim class="es6">
 { font-weight: 700; } => { fontWeight: 700 }
-								    </code></pre>
-								</li>
-								<li class="fragment">
-									Values are quoted
-								    <pre><code data-trim class="es6">
+                    </code></pre>
+                </li>
+                <li class="fragment">
+                  Values are quoted
+                    <pre><code data-trim class="es6">
 { color: #F00; } => { color: '#F00' }
-								    </code></pre>
-								</li>
-								<li class="fragment">
-									And single pixel values are numbers without the PX
-								    <pre><code data-trim class="es6">
+                    </code></pre>
+                </li>
+                <li class="fragment">
+                  And single pixel values are numbers without the PX
+                    <pre><code data-trim class="es6">
 { height: 175px; } => { height: 175 }
-								    </code></pre>
-								</li>
-							</ul>
-						</p>
-						<aside class="notes">
-				      React has cleaned up this concept and brought it back to life.
+                    </code></pre>
+                </li>
+              </ul>
+            </p>
+            <aside class="notes">
+              React has cleaned up this concept and brought it back to life.
 
-				      There are subtle differences between React's Styles and CSS's.
+              There are subtle differences between React's Styles and CSS's.
 
-							Keys are camelCased instead of dashed
+              Keys are camelCased instead of dashed
 
-							Values are quoted
+              Values are quoted
 
-							And single pixel values are numbers without the PX
-				    </aside>
-					</section>
-				</section>
+              And single pixel values are numbers without the PX
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Globals</h2>
-					</section>
-					<section>
-						<h2>Use Existing Tools</h2>
-						<p>
-							Require/import are great ways to isolate & decouple in JS.
-						</p>
-						<p class="fragment">
-							They can be used for styles too.
-						</p>
-						<aside class="notes">
-				      I'm assuming everyone here is familiar with the CommonJS pattern of requiring in modules.
+        <section>
+          <section>
+            <h2>Globals</h2>
+          </section>
+          <section>
+            <h2>Use Existing Tools</h2>
+            <p>
+              Require/import are great ways to isolate & decouple in JS.
+            </p>
+            <p class="fragment">
+              They can be used for styles too.
+            </p>
+            <aside class="notes">
+              I'm assuming everyone here is familiar with the CommonJS pattern of requiring in modules.
 
-				      Well, styles written in JS can freely be pulled in in the same way.
-				    </aside>
-					</section>
-					<section>
-				    <pre><code data-trim class="es6">
+              Well, styles written in JS can freely be pulled in in the same way.
+            </aside>
+          </section>
+          <section>
+            <pre><code data-trim class="es6">
 import MyComponentStyles from './MyComponentStyles.js'
 import {
-	TypographyStyles,
-	LayoutStyles,
+  TypographyStyles,
+  LayoutStyles,
 } from '../styles/BaseStyles.js'
-				    </code></pre>
-						<aside class="notes">
-				      There's no ambiguity here, the styles you are using can be quickly isolated down to a few SHORT files.
-				    </aside>
-					</section>
-				</section>
+            </code></pre>
+            <aside class="notes">
+              There's no ambiguity here, the styles you are using can be quickly isolated down to a few SHORT files.
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Sharing Values</h2>
-					</section>
-					<section>
-						<h2>Sharing Values in JS is<br/>Dead Simple</h2>
-						<p class="fragment">
-							You declare a var (let, or const) and use it.
-						</p>
-					</section>
-					<section>
-				    <pre><code data-trim>
+        <section>
+          <section>
+            <h2>Sharing Values</h2>
+          </section>
+          <section>
+            <h2>Sharing Values in JS is<br/>Dead Simple</h2>
+            <p class="fragment">
+              You declare a var (let, or const) and use it.
+            </p>
+          </section>
+          <section>
+            <pre><code data-trim>
 let currentHeight = parseInt(window.innerHeight / 13, 10)
 
 styles = extend(styles, {height: currentHeight})
-				    </code></pre>
-						<aside class="notes">
-				      I think this slide says it all.
-				    </aside>
-					</section>
-				</section>
+            </code></pre>
+            <aside class="notes">
+              I think this slide says it all.
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>The Cascade</h2>
-					</section>
-					<section>
-						<h2>Declaritive Extends Make Overrides Obvious</h2>
-						<p class="fragment">
-							You simply look at order in a short list.
-						</p>
-					</section>
-					<section>
-				    <pre><code data-trim class="es6">
+        <section>
+          <section>
+            <h2>The Cascade</h2>
+          </section>
+          <section>
+            <h2>Declaritive Extends Make Overrides Obvious</h2>
+            <p class="fragment">
+              You simply look at order in a short list.
+            </p>
+          </section>
+          <section>
+            <pre><code data-trim class="es6">
 const styles = extend(importedStyles, {
-	moreStyles: {
-		fontWeight: 100
-	}
+  moreStyles: {
+    fontWeight: 100
+  }
 }, {
-	moreStyles: {
-		fontWeight: 700
-	}
+  moreStyles: {
+    fontWeight: 700
+  }
 })
-				    </code></pre>
-				    <p class="fragment">
-				    	Font weight for styles.moreStyles will be 700.
-				    </p>
-						<aside class="notes">
-				      You can quickly tell which styles will take precedence based on the order you declared them.
-				    </aside>
-					</section>
-				</section>
+            </code></pre>
+            <p class="fragment">
+              Font weight for styles.moreStyles will be 700.
+            </p>
+            <aside class="notes">
+              You can quickly tell which styles will take precedence based on the order you declared them.
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Dependencies</h2>
-					</section>
-					<section>
-						<h2>Inline Styles are Delivered with HTML</h2>
-						<p class="fragment">
-							And they have obvious specicifity&mdash;no calculations necessary.
-						</p>
-						<aside class="notes">
-				      With inline styles, you just eliminate the problem by not relying on a seperate file.
-				    </aside>
-					</section>
-					<section>
-				    <pre><code data-trim class="html">
+        <section>
+          <section>
+            <h2>Dependencies</h2>
+          </section>
+          <section>
+            <h2>Inline Styles are Delivered with HTML</h2>
+            <p class="fragment">
+              And they have obvious specicifity&mdash;no calculations necessary.
+            </p>
+            <aside class="notes">
+              With inline styles, you just eliminate the problem by not relying on a seperate file.
+            </aside>
+          </section>
+          <section>
+            <pre><code data-trim class="html">
 &lt;div style="display: inline-block; width: 8px; height: 8px; bottom: 0px; margin-left: 0px; margin-right: 5px; border-radius: 99px; position: relative; transition: background-color 0.111s ease-in-out; background-color: rgb(132, 154, 61);" data-reactid=".0.$=11:0.$=10=21:0.$=11:0.1.1.$0.0.0.0"&gt;&lt;/div&gt;
-				    </code></pre>
-					</section>
-				</section>
+            </code></pre>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Findability</h2>
-					</section>
-					<section>
-						<h2>Component Folders Contain Their Dependencies</h2>
-						<p class="fragment">
-							Want to find the styles for a component?
-						</p>
-						<ol>
-							<li class="fragment">
-								Open the ______Styles.js file in that component folder.
-							</li>
-							<li class="fragment">
-								Done.
-							</li>
-							<li class="fragment">
-								Go drink a beer.
-							</li>
-						</ol>
-					</section>
-					<section>
-						<img src="./img/folder.png" height="204" width="364" alt="">
-						<aside class="notes">
-				      It doesn't get much easier than that to find files relevant to a component.
-				    </aside>
-					</section>
-				</section>
+        <section>
+          <section>
+            <h2>Findability</h2>
+          </section>
+          <section>
+            <h2>Component Folders Contain Their Dependencies</h2>
+            <p class="fragment">
+              Want to find the styles for a component?
+            </p>
+            <ol>
+              <li class="fragment">
+                Open the ______Styles.js file in that component folder.
+              </li>
+              <li class="fragment">
+                Done.
+              </li>
+              <li class="fragment">
+                Go drink a beer.
+              </li>
+            </ol>
+          </section>
+          <section>
+            <img src="./img/folder.png" height="204" width="364" alt="">
+            <aside class="notes">
+              It doesn't get much easier than that to find files relevant to a component.
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Readability</h2>
-					</section>
-					<section>
-						<h2>JSX</h2>
-						<p class="fragment">
-							Even a designer could quickly tell what JSX's XML will translate too.
-						</p>
-				    <pre><code data-trim class="jsx">
-render () {
-	return (
-		&lt;MyComponent&gt;
-			&lt;h1&gt;Hello World&lt;/h1&gt;
-		&lt;/MyComponent&gt;
-	)
-}
-				    </code></pre>
-						<aside class="notes">
-				      Maybe it's just me, but this maps really well to my mental models of html elements which is what we're emulating with the virtual dom.
-				    </aside>
-					</section>
-				</section>
+        <section>
+          <h2>Complications</h2>
+          <aside class="notes">
+            <ul>
+              <li>
+                It's not all peaches n' cream
+              </li>
+              <li>
+                This approach eliminates the problems we went through
+              </li>
+              <li>
+                But it introduces some complications & tradeoffs
+              </li>
+            </ul>
+          </aside>
+        </section>
 
-				<section>
-					<h2>Complications</h2>
-					<aside class="notes">
-						<ul>
-							<li>
-								It's not all peaches n' cream
-							</li>
-							<li>
-								This approach eliminates the problems we went through
-							</li>
-							<li>
-								But it introduces some complications & tradeoffs
-							</li>
-						</ul>
-					</aside>
-				</section>
-
-				<section>
-					<section>
-						<h2>Clutter</h2>
-						<p class="fragment">
-							Components don't stay simple.
-						</p>
-						<p class="fragment">
-							Complexity can lead to cluttered component code.
-						</p>
-						<aside class="notes">
-							<ul>
-								<li>
-								</li>
-							</ul>
-						</aside>
-					</section>
-					<section>
-						<h2>Inline Styles Reduce Readability</h2>
-				    <pre><code data-trim class="jsx fragment">
+        <section>
+          <section>
+            <h2>Clutter</h2>
+            <p class="fragment">
+              Components don't stay simple.
+            </p>
+            <p class="fragment">
+              Complexity can lead to cluttered component code.
+            </p>
+            <aside class="notes">
+              <ul>
+                <li>
+                </li>
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <h2>Inline Styles Reduce Readability</h2>
+            <pre><code data-trim class="jsx fragment">
 return (
-	&lt;MyComponent
-		style={{
-			minHeight: 350,
-			color: 'red',
-			backgroundColor: 'black',
-			width: '36em',
-			position: 'relative',
-		}}
-	&gt;
-		&lt;div
-			style={{
-				position: 'absolute',
-				top: 16,
-				left: 16,
-			}}
-		&gt;
-			Some stuffs.
-		&lt;/div&gt;
-	&lt;/MyComponent&gt;
+  &lt;MyComponent
+    style={{
+      minHeight: 350,
+      color: 'red',
+      backgroundColor: 'black',
+      width: '36em',
+      position: 'relative',
+    }}
+  &gt;
+    &lt;div
+      style={{
+        position: 'absolute',
+        top: 16,
+        left: 16,
+      }}
+    &gt;
+      Some stuffs.
+    &lt;/div&gt;
+  &lt;/MyComponent&gt;
 )
-				    </code></pre>
-						<aside class="notes">
-						</aside>
-					</section>
-					<section>
-						<h2>Treat Styles Like Objects</h2>
-						<p class="fragment">
-							(because they are)
-						</p>
-				    <pre><code data-trim class="jsx fragment">
+            </code></pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Treat Styles Like Objects</h2>
+            <p class="fragment">
+              (because they are)
+            </p>
+            <pre><code data-trim class="jsx fragment">
 const styles = {
-	MyComponentStyles: {
-		minHeight: 350,
-		width: '36em',
-		position: 'relative',
-	},
-	divStyles: {
-		position: 'absolute',
-		top: 16,
-		left: 16,
-	}
+  MyComponentStyles: {
+    minHeight: 350,
+    width: '36em',
+    position: 'relative',
+  },
+  divStyles: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
+  }
 }
 return (
-	&lt;MyComponent style={styles.MyComponentStyles}&gt;
-		&lt;div style={styles.divStyles}&gt;
-			Some stuffs.	
-		&lt;/div&gt;
-	&lt;/MyComponent&gt;
+  &lt;MyComponent style={styles.MyComponentStyles}&gt;
+    &lt;div style={styles.divStyles}&gt;
+      Some stuffs.
+    &lt;/div&gt;
+  &lt;/MyComponent&gt;
 )
-				    </code></pre>
-				    <aside class='notes'>
-				    	now it looks like html again
-				    </aside>
-					</section>
-					<section>
-						<h2>Complex Property Lists Also Reduce Readability</h2>
-				    <pre><code data-trim class="jsx fragment">
-return (
-	&lt;MyComponent
-		changeHandler={this.changeHandler.bind(this)}
-		key={props.id}
-		yOrient='left'
-		align='right'
-		legend={props.data.length &gt; 1 ? true : false}
-	&gt;
-		&lt;div
-			isReactCSSTransitionGroup={true}
-			ref='someStuffs'
-			className='yoyo yo'
-		&gt;
-			Some stuffs.	
-		&lt;/div&gt;
-	&lt;/MyComponent&gt;
-)
-				    </code></pre>
-				    <aside class='notes'>
-				    	this only loosely resembles html
-				    </aside>
-					</section>
-					<section>
-						<h2>Treat Properties Like Objects</h2>
-						<p class="fragment">
-							(because they are)
-						</p>
-				    <pre><code data-trim class="jsx fragment">
-const MyComponentProps = {
-	changeHandler: this.changeHandler.bind(this),
-	key: props.id,
-	yOrient: 'left',
-	align: 'right',
-	legend: props.data.length > 1 ? true : false,
-	style: styles.MyComponentStyles,
-}
-const divProps = {
-	isReactCSSTransitionGroup: true,
-	ref: 'someStuffs',
-	className: 'yoyo yo',
-	style: styles.divStyles,
-}
-return (
-	&lt;MyComponent {...MyComponentProps}&gt;
-		&lt;div {...divProps}&gt;
-			Some stuffs.
-		&lt;/div&gt;
-	&lt;/MyComponent&gt;
-)
-				    </code></pre>
-				    <aside class='notes'>
-				    	<ul>
-				    		<li>
-				    			again
-				    		</li>
-				    		<li>
-				    			we're really dealing with objects
-				    		</li>
-				    		<li>
-				    			now it looks like html
-				    		</li>
-				    	</ul>
-				    </aside>
-					</section>
-				</section>
+            </code></pre>
+            <aside class='notes'>
+              now it looks like CSS again
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>						
-						<h2>Pseudo Selectors</h2>
-						<p class="fragment">Don't work inline.</p>
-						<p class="fragment">:\</p>
-					</section>
-					<section>
-						<h2>But We still need hover?!</h2>
-						<p class="fragment">
-							Libraries to the rescue!
-						</p>
-					</section>
-					<section>
-						<h2>Radium.js</h2>
-						<p class="fragment">
-							Is a decoration on React classes.
-						</p>
-						<p class="fragment">
-							It's kind of shimming inline style's shortcomings.
-						</p>
-						<pre><code data-trim class="jsx fragment">
+        <section>
+          <section>
+            <h2>Pseudo Selectors</h2>
+            <p class="fragment">Don't work inline.</p>
+            <p class="fragment">:\</p>
+          </section>
+          <section>
+            <h2>But We still need hover?!</h2>
+            <p class="fragment">
+              Libraries to the rescue!
+            </p>
+          </section>
+          <section>
+            <h2>Radium.js</h2>
+            <p class="fragment">
+              Is a decoration on React classes.
+            </p>
+            <p class="fragment">
+              It's kind of shimming inline style's shortcomings.
+            </p>
+            <pre><code data-trim class="jsx fragment">
 const styles = {
-	linkStyle: {
-		backgroundColor: '#FFF'
-		':hover': {
-			backgroundColor: '#0088FF'
-		}
-	}
+  linkStyle: {
+    backgroundColor: '#FFF'
+    ':hover': {
+      backgroundColor: '#0088FF'
+    }
+  }
 },
-				    </code></pre>
-					</section>
-				</section>
+            </code></pre>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Media Queries</h2>
-						<p class="fragment">Also,...</p>
-						<p class="fragment">Don't work inline.</p>
-						<p class="fragment">:\</p>
-						<aside class="notes">
-						</aside>
-					</section>
-					<section>
-						<h2>Radium.js</h2>
-						<p class="fragment">To the rescue again!</p>
-				    <pre><code data-trim class="jsx fragment">
+        <section>
+          <section>
+            <h2>Media Queries</h2>
+            <p class="fragment">Also,...</p>
+            <p class="fragment">Don't work inline.</p>
+            <p class="fragment">:\</p>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Radium.js</h2>
+            <p class="fragment">To the rescue again!</p>
+            <pre><code data-trim class="jsx fragment">
 const styles = {
-	linkStyle: {
-		backgroundColor: '#FFF',
-		':hover': {
-			backgroundColor: '#0088FF',
-		},
-		'@media(min-width:769px)': {
-			fontSize: 16,
-		},
-	},
+  linkStyle: {
+    backgroundColor: '#FFF',
+    ':hover': {
+      backgroundColor: '#0088FF',
+    },
+    '@media(min-width:769px)': {
+      fontSize: 16,
+    },
+  },
 },
-				    </code></pre>
-						<aside class="notes">
-						</aside>
-					</section>
-				</section>
+            </code></pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Publishing Your Own Components</h2>
-						<p class="fragment">
-							Inline styles will not be overridden.
-						</p>
-						<p class="fragment">
-							Your consumers need an API, or,...
-						</p>
-						<p class="fragment">
-							you can simply use stylesheets.
-						</p>
-						<p class="fragment">
-							:\
-						</p>
-						<aside class="notes">
-						</aside>
-					</section>
-					<section>
-						<h2>Public API</h2>
-						<p class="fragment">
-							Add props for each stylable child element.
-						</p>
-					</section>
-					<section>
-						<p>
-							The top level component gets setup by the consumer:
-						</p>
-				    <pre><code data-trim class="jsx fragment">
+        <section>
+          <section>
+            <h2>Publishing Your Own Components</h2>
+            <p class="fragment">
+              Inline styles will not be overridden.
+            </p>
+            <p class="fragment">
+              Your consumers need an API, or,...
+            </p>
+            <p class="fragment">
+              you can simply use stylesheets.
+            </p>
+            <p class="fragment">
+              :\
+            </p>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Public API</h2>
+            <p class="fragment">
+              Add props for each stylable child element.
+            </p>
+          </section>
+          <section>
+            <p>
+              The top level component gets setup by the consumer:
+            </p>
+            <pre><code data-trim class="jsx fragment">
 import { MyComponent } from 'my-published-component'
 ...
 return (
-	&lt;MyComponent
-		divStyle={styles.customDivStyles}
-		linkStyle={styles.customLinkStyles}
-	/&gt;
+  &lt;MyComponent
+    divStyle={styles.customDivStyles}
+    linkStyle={styles.customLinkStyles}
+  /&gt;
 )
-				    </code></pre>
-						<aside class="notes">
-						</aside>
-					</section>
-					<section>
-						<p>
-							Within the published component we apply those props as styles:
-						</p>
-				    <pre><code data-trim class="jsx fragment">
+            </code></pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <p>
+              Within the published component we apply those props as styles:
+            </p>
+            <pre><code data-trim class="jsx fragment">
 const styles = {
-	divStyle: {
-		...
-	},
-	linkStyle: {
-	  ...
-	},
+  divStyle: {
+    ...
+  },
+  linkStyle: {
+    ...
+  },
 }
 
 const {
-	divStyle,
-	linkStyle,
+  divStyle,
+  linkStyle,
 } = this.props
 
 const _divStyle = extend({}, styles.divStyle, divStyle)
 const _linkStyle = extend({}, styles.linkStyle, linkStyle)
 
 return (
-	&lt;div
-		style={_divStyle}
-	&gt;
-		&lt;a
-			href='javascript:void(1)'
-			style={_linkStyle}
-		&gt;
-			Click me!
-		&lt;/a&gt;
-	&lt;/div&gt;
+  &lt;div
+    style={_divStyle}
+  &gt;
+    &lt;a
+      href='javascript:void(1)'
+      style={_linkStyle}
+    &gt;
+      Click me!
+    &lt;/a&gt;
+  &lt;/div&gt;
 )
-				    </code></pre>
-				    <p class="fragment">
-				    	This is a use case where classic CSS makes the code more portable, so it may be better to just use classes and CSS.
-				    </p>
-						<aside class="notes">
-						</aside>
-					</section>
-				</section>
+            </code></pre>
+            <p class="fragment">
+              This is a use case where classic CSS makes the code more portable, so it may be better to just use classes and CSS.
+            </p>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>CSS Animations</h2>
-						<p>
-							Easier than you think.
-						</p>
-						<aside class="notes">
-						</aside>
-					</section>
-					<section>
-						<h2>Radium.js</h2>
-						<p>
-							Radium provides an API for keyframe animations:
-						</p>
-				    <pre><code data-trim class="jsx fragment">
+        <section>
+          <section>
+            <h2>CSS Animations</h2>
+            <p>
+              Easier than you think.
+            </p>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Radium.js</h2>
+            <p>
+              Radium provides an API for keyframe animations:
+            </p>
+            <pre><code data-trim class="jsx fragment">
 const pulseKeyframes = Radium.keyframes({
   '0%': {width: '10%'},
   '50%': {width: '50%'},
@@ -924,164 +717,345 @@ const styles = {
     margin: '0 auto',
   }
 };
-				    </code></pre>
-				    <p class="fragment">
-				    	Radium takes care of the vendor prefixing as well.
-				    </p>
-						<aside class="notes">
-						</aside>
-					</section>
-				</section>
+            </code></pre>
+            <p class="fragment">
+              Radium takes care of the vendor prefixing as well.
+            </p>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>CSS Transitions</h2>
-						<p class="fragment">
-							Not as easy as you think.
-						</p>
-						<p class="fragment">
-							:\
-						</p>
-						<aside class="notes">
-						</aside>
-					</section>
-					<section>
-						<h2>CSSTransitionGroup</h2>
-						<p>
-							React has an addon called CSSTransitionGroup.
-						</p>
-						<p class="fragment">
-							It manages the application of custom classes through component lifecycle hooks.
-						</p>
-						<p class="fragment">
-							But that means we need a seperate style sheet <span class="fragment">,... right?</span>
-						</p>
-						<aside class="notes">
-						</aside>
-					</section>
-					<section>
-						<h2>Radium Style Component</h2>
-						<p>
-							Adds a style element to the DOM.
-						</p>
-						<p class="fragment">
-							Warning: use sparingly!
-						</p>
-				    <pre><code data-trim class="jsx fragment">
+        <section>
+          <section>
+            <h2>CSS Transitions</h2>
+            <p class="fragment">
+              Not as easy as you think.
+            </p>
+            <p class="fragment">
+              :\
+            </p>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>CSSTransitionGroup</h2>
+            <p>
+              React has an addon called CSSTransitionGroup.
+            </p>
+            <p class="fragment">
+              It manages the application of custom classes through component lifecycle hooks.
+            </p>
+            <p class="fragment">
+              But that means we need a seperate style sheet <span class="fragment">,... right?</span>
+            </p>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Radium Style Component</h2>
+            <p>
+              Adds a style element to the DOM.
+            </p>
+            <p class="fragment">
+              Warning: use sparingly!
+            </p>
+            <pre><code data-trim class="jsx fragment">
 import Radium, { Style } from 'radium'
 import { ReactCSSTransitionGroup } from ('react/addons/CSSTransitionGroup')
 ...
 return (
-	&lt;div&gt;
+  &lt;div&gt;
     &lt;Style rules={{
-	      '.yo-appear': {
-	        opacity: 0.01,
-	        transition: 'opacity 1.666s linear',
-	      },
-	      '.yo-appear.yo-appear-active': {
-	        opacity: 1
-	      }
-	    }}
-	  &gt;
-	  &lt;/Style&gt;
-    &lt;ReactCSSTransitionGroup
-    	transitionName='yo'
-    	transitionAppear={true}
+        '.yo-appear': {
+          opacity: 0.01,
+          transition: 'opacity 1.666s linear',
+        },
+        '.yo-appear.yo-appear-active': {
+          opacity: 1
+        }
+      }}
     &gt;
-    	{props.children}
+    &lt;/Style&gt;
+    &lt;ReactCSSTransitionGroup
+      transitionName='yo'
+      transitionAppear={true}
+    &gt;
+      {props.children}
     &lt;/ReactCSSTransitionGroup&gt;
-	&lt;/div&gt;
+  &lt;/div&gt;
 )
-				    </code></pre>
-					</section>
-				</section>
+            </code></pre>
+          </section>
+        </section>
 
-				<section>
-					<section>
-						<h2>Byte Size</h2>
-						<p class="fragment">
-							nom, nom, nom
-						</p>
-						<aside class="notes">
-						</aside>
-					</section>
-					<section>
-						<h2>Inline Styles Can Bloat the Size of Your HTML</h2>
-				    <pre><code data-trim class="html fragment">
+        <section>
+          <section>
+            <h2>Byte Size</h2>
+            <p class="fragment">
+              nom, nom, nom
+            </p>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Inline Styles Can Bloat the Size of Your HTML</h2>
+            <pre><code data-trim class="html fragment">
 &lt;ul&gt;
-	&lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
+  &lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
 &lt;/ul&gt;
-				    </code></pre>
-						<p class="fragment">Especially for large lists.</p>
-				    <pre><code data-trim class="html fragment">
+            </code></pre>
+            <p class="fragment">Especially for large lists.</p>
+            <pre><code data-trim class="html fragment">
 &lt;ul&gt;
-	&lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
-	&lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
-	&lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
-	...
-	...
-	...
-	&lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
+  &lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
+  &lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
+  &lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
+  ...
+  ...
+  ...
+  &lt;li style="background-color: red; height: 27px; padding: 0;"&gt;&lt;/li&gt;
 &lt;/ul&gt;
-				    </code></pre>
-				    <p class="fragment">57 Characters ~ between 57 & 228 Bytes per element,</p>
-				    <p class="fragment">roughly 1KB per 17 elements.</p>
-						<aside class="notes">
-						</aside>
-					</section>
-				</section>
+            </code></pre>
+            <p class="fragment">57 Characters ~ between 57 & 228 Bytes per element,</p>
+            <p class="fragment">roughly 1KB per 17 elements.</p>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
 
-				<section>
-					<h1>JSX & Inline Styles</h1>
-					<p>
-						Leave predictable/readable components for your future self and/or any future devs that have to touch your work.
-					</p>
-					<br>
-					<br>
-					<p class="fragment">
-						JSX & Inline Styles can be a powerful tool to accomplish this goal,... but keep the potential complications in mind.
-					</p>
-					<p class="fragment">
-						<small>Presented by <a href="https://www.linkedin.com/in/jayseeg">Jake Gibbons</a> / <a href="https://twitter.com/jayseeg">@jayseeg</a></small>
-					</p>
-					<aside class="notes">
-			      In closing, JSX & Inline Styles w/ react are intuitive ways to make your code more maintainable over time.
-			    </aside>
-				</section>
+        <section>
+          <section>
+            <h2>There's got to be a better way</h2>
+            <aside class="notes">
+              <ul>
+                <li>
+                  we don't want to rely on third parties like Radium
+                </li>
+                <li>
+                  we want first class support for using transitions
+                </li>
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <h2>Collocated Namespacing</h2>
+            <p class="fragment">Many of our gripes with classic CSS can be resolved with a tool called CSS Modules</p>
+            <div class="fragment">
+              <h2><a href="https://github.com/gajus/react-css-modules">React CSS Modules</a></h2>
+              <p>more specifically for React</p>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>
+                  colocation is possible w/out inlining
+                </li>
+                <li>
+                  still involves a tradeoff
+                </li>
+              </ul>
+            </aside>
+          </section>
+        </section>
 
-			</div>
+        <section>
+          <section>
+            <h2>Namespacing</h2>
+            <p class="fragment">
+              UUID's appended to classes to enforce preference for local styles
+            </p>
+            <aside class="notes">
+              <ul>
+                <li>
+                  Using unique strings appended to classes and css processed to match,
+                </li>
+                <li>
+                  traditional stylesheets can be built that apply styles predictably
+                </li>
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <pre><code data-trim class="jsx">
+import React from 'react'
+import CSSModules from 'react-css-modules'
+import styles from './table.css'
 
-		</div>
+@CSSModules(styles)
+export default class Table extends React.Component {
+  render () {
+    return (
+      <div
+        styleName='table'
+        className='masterTable'
+      >
+        <div styleName='row'>
+          <div styleName='cell'>A0</div>
+        </div>
+      </div>
+    )
+  }
+}
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>
+                  the styleName prop is grabbed by the CSSModules decorator
+                </li>
+                <li>
+                  it is then magically applied to matching css output from the included stylesheet
+                </li>
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <pre><code data-trim class="html">
+<div class='masterTable table___paD42Z'>
+  <div class='row___ks31s'>
+    <div class='cell___sA4jH'>A0</div>
+  </div>
+</div>
+            </code></pre>
+            <pre class="fragment"><code data-trim class="css">
+.table___paD42Z {}
+.row___ks31s {}
+.cell___sA4jH {}
+            </code></pre>
+            <p class="fragment">
+              styleName props will produce a className with a UUID & will process your compiled CSS rules to match
+            </p>
+            <aside class="notes">
+              pretty cool huh?
+            </aside>
+          </section>
+        </section>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+        <section>
+          <section>
+            <h2>Collocating</h2>
+            <p class="fragment">
+              Up to you to decide where to locate files
+            </p>
+          </section>
+          <section>
+            <img src="./img/folder2.png" height="136" width="364" alt="">
+            <aside class="notes">
+              <ul>
+                <li>
+                  for the sake of easier management of code I'd recommend using a convention that keeps stylesheets close to their component
+                </li>
+                <li>
+                  when extending existing styles, you may not mind all the dots in a relative path
+                </li>
+                <li>
+                  or maybe you see a benefit in using webpack to add base paths for your imports
+                </li>
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <pre><code data-trim class="css">
+.table {
+  composes: table from '../AnotherTableComponent/styles/table.css';
+  width: 798px;
+}
+            </code></pre>
+            <p>
+              You can use your favorite preprocessor to extend, or you can use React CSS Module's built in functionality.
+            </p>
+            <aside class="notes">
+              <ul>
+                <li>
+                  extending existing styles is handled more classically in this approach
+                </li>
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <pre><code data-trim class="css">
+.table {
+  /* WARNING this value is shared with ../index.js */
+  width: 798px;
+}
+            </code></pre>
+            <p>
+              Unfortunately, we're still stuck with no solution for shared values.
+            </p>
+            <p class="fragment">Life's full of tradeoffs. :\</p>
+            <aside class="notes">
+              <ul>
+                <li>
+                  too bad you still can't share values between 'concerns'
+                </li>
+                <li>
+                  womp womp
+                </li>
+              </ul>
+            </aside>
+          </section>
+        </section>
 
-		<script>
+        <section>
+          <h1>Inline Styles</h1>
+          <p>
+            Leave predictable components for your future self and/or any future devs that have to touch your work.
+          </p>
+          <br>
+          <br>
+          <p class="fragment">
+            Inline Styles can be a powerful tool to accomplish this goal,... but keep the potential complications in mind, and look to React CSS Modules if they are showstoppers.
+          </p>
+          <p class="fragment">
+            <small>Presented by <a href="https://www.linkedin.com/in/jayseeg">Jake Gibbons</a> / <a href="https://twitter.com/jayseeg">@jayseeg</a></small>
+          </p>
+          <aside class="notes">
+            <ul>
+              <li>
+                In closing; Inline Styles w/ react are intuitive ways to make your code more maintainable over time.
+              </li>
+              <li>
+                However, limitations related to how browsers handle inline styles may make them unusable as a solution.
+              </li>
+              <li>
+                In that case, tools like React CSS Modules can accomplish almost all of the same goals.
+              </li>
+            </ul>
+          </aside>
+        </section>
 
-			// Full list of configuration options available at:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+      </div>
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
+    </div>
 
-				// Optional reveal.js plugins
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.configure({
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.configure({
   tabReplace: '  ', // 2 spaces
 }); hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
-				]
-			});
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
+        ]
+      });
 
-		</script>
+    </script>
 
-	</body>
+  </body>
 </html>
