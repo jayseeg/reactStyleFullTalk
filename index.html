@@ -43,7 +43,7 @@
         <section>
           <h1>Predictability</h1>
           <h3>or Why Inline Styles Win Over 'Seperation of Concerns' Dogma</h3>
-          <h3 class="fragment">and Why They Lose</h3>
+          <h3>and Why They Lose</h3>
           <p>
             <small>Presented by <a href="https://www.linkedin.com/in/jayseeg">Jake Gibbons</a> / <a href="https://twitter.com/jayseeg">@jayseeg</a></small>
           </p>
@@ -74,7 +74,7 @@
                 Because reusable components are dry by nature.
               </li>
               <li>
-                Let me tell you why I say that.
+                Let me tell you why I say that & how you can benefit.
               </li>
             </ul>
           </aside>
@@ -103,13 +103,35 @@
             </li>
           </ul>
           <aside class="notes">
-             It's difficult to predictably modify or style components in a web app
-
-             Specifically a React app for the purposes of this presentation.
-
-             There are challenges surrounding: globals, sharing values across 'concerns', the cascade, dependencies, and findability.
-
-             I'll go into each more indepth now.
+            <ul>
+              <li>
+                It's difficult to predictably modify or style components in a web app
+              </li>
+              <li>
+                Specifically a React app for the purposes of this presentation.
+              </li>
+              <li>
+                There are challenges surrounding:
+              </li>
+              <li>
+                globals
+              </li>
+              <li>
+                sharing values across 'concerns'
+              </li>
+              <li>
+                the cascade
+              </li>
+              <li>
+                dependencies
+              </li>
+              <li>
+                findability
+              </li>
+              <li>
+                I'll go into each more indepth now.
+              </li>
+            </ul>
           </aside>
         </section>
 
@@ -862,7 +884,7 @@ return (
           <section>
             <h2>Namespacing</h2>
             <p class="fragment">
-              UUID's appended to classes to enforce preference for local styles
+              Hashes's appended to classes to enforce preference for local styles
             </p>
             <aside class="notes">
               <ul>
@@ -897,6 +919,11 @@ export default class Table extends React.Component {
   }
 }
             </code></pre>
+            <pre><code data-trim class="css">
+.table { width: 500px; }
+.row { height: 44px; }
+.cell { background: red; }
+            </code></pre>
             <aside class="notes">
               <ul>
                 <li>
@@ -916,13 +943,13 @@ export default class Table extends React.Component {
   </div>
 </div>
             </code></pre>
-            <pre class="fragment"><code data-trim class="css">
-.table___paD42Z {}
-.row___ks31s {}
-.cell___sA4jH {}
+            <pre><code data-trim class="css">
+.table___paD42Z { width: 500px; }
+.row___ks31s { height: 44px; }
+.cell___sA4jH { background: red; }
             </code></pre>
-            <p class="fragment">
-              styleName props will produce a className with a UUID & will process your compiled CSS rules to match
+            <p>
+              styleName props will produce a className with a hash & will process your compiled CSS rules to match
             </p>
             <aside class="notes">
               pretty cool huh?
@@ -1007,6 +1034,8 @@ export default class Table extends React.Component {
           </p>
           <p class="fragment">
             <small>Presented by <a href="https://www.linkedin.com/in/jayseeg">Jake Gibbons</a> / <a href="https://twitter.com/jayseeg">@jayseeg</a></small>
+            <br/>
+            <small>Slides: <a href="http://react-styles.surge.sh" target="_blank">react-styles.surge.sh</a></small>
           </p>
           <aside class="notes">
             <ul>
